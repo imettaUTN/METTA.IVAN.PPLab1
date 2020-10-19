@@ -10,5 +10,4 @@ typedef struct
 
 void MostrarFecha(eFecha fecha);
 eFecha crearFecha();
-eFecha getFechaActual();
 #endif // FECHA_H_INCLUDED

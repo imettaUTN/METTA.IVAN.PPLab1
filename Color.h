@@ -36,71 +36,13 @@ void ListarColores(eColor colores[],int tam);
 char * MostrarColor(eColor colores[],int tam, int id);
 
 /** \brief
- * Da de alta un color
-  * \param colores[] eColor
- * \param tam int
- * \return int
- *
- */
-int ALTACOLOR(eColor colores[], int tam );
-
-/** \brief
- * Da de baja un color
- * \param colores[] eColor
- * \param tam int
- * \param idColor int
- * \return int
- *
- */
-int BAJACOLOR(eColor colores[], int tam , int idColor);
-
-
-/** \brief
- * Da de baja un color
- * \param colores[] eColor
- * \param tam int
- * \param idColor int
- * \return int
- *
- */
-int MODIFICARCOLOR(eColor colores[], int tam , int idColor);
-
-/** \brief
- * Busca pos libre en el vector
- * \param colores[] eColor
- * \param tam int
- * \return int
- *
- */
-int BuscarIdLibreColor(eColor colores[], int tam );
-
-/** \brief
- * Inicializa el vector colores
- * \param colores[] eColor
- * \param tam int
- * \return void
- *
- */
-void InicializarColores(eColor colores[], int tam );
-
-/** \brief
- * Busca posicion en el vector segun el id
- * \param colores[] eColor
- * \param tam int
- * \param id int
- * \return int
- *
- */
-int BuscarPosColor(eColor colores[], int tam ,int id);
-
-/** \brief
- *  Indica si existe el id del color
+ * Busca el subindice del color en el vector, segun su id
  * \param colores[] eColor vector colores
- * \param tam int tamaño vector
- * \param ID int id color
- * \return int TRUE / FALSE
+ * \param tam int tamaño
+ * \param id int id color
+ * \return int posicion en el vector , -1  si no se encuentra
  *
  */
-int ExisteIdColor(eColor colores[], int tam, int ID);
+int BuscarPosColor(eColor colores[], int tam, int id);
 
 #endif // COLOR_H_INCLUDED

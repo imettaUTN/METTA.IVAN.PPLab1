@@ -44,6 +44,7 @@
 		</Unit>
 		<Unit filename="Common.h" />
 		<Unit filename="DataStore.h" />
+		<Unit filename="DataStoreTrabajos.h" />
 		<Unit filename="Fecha.c">
 			<Option compilerVar="CC" />
 		</Unit>

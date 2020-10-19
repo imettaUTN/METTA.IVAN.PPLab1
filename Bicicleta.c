@@ -53,6 +53,7 @@ void ListarRodadosValidos()
 
     float rodados[] = {20,26,27.5,29};
     printf("Rodados disponibles :\n");
+    printf("------------------------\n");
 
     for(int i = 0; i < TAMRODADOS ; i++)
     {
@@ -65,7 +66,7 @@ int BuscarIdLibre(eBicicleta bicicletas[], int tam)
 {
      for(int i = 0; i < tam ; i++)
     {
-        if(bicicletas[i].id <0)
+        if(bicicletas[i].isEmpty)
         {
             return i;
         }
@@ -74,22 +75,8 @@ int BuscarIdLibre(eBicicleta bicicletas[], int tam)
     return -1;
 }
 
-int ExisteId(eBicicleta bicicletas[], int tam, int ID)
+int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, int tamC, int tamT, int id)
 {
-    for(int i = 0; i <tam; i++)
-    {
-        if(bicicletas[i].id == ID)
-        {
-             printf("ID ya existente \n");
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, int tamC, int tamT)
-{
-    int id;
     char marca[20];
     int idTipo;
     int idColor;
@@ -98,15 +85,6 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, i
     eBicicleta bici ;
     int pos = BuscarIdLibre(bicicletas,tamBici);
     if(pos <0) {return TRUE;}
-    printf("Ingrese ID mayor a  0\n");
-    scanf("%d",&id);
-
-    while(id <0 || ExisteId(bicicletas,tamBici,id))
-    {
-        printf("Id invalido\n");
-        printf("Reingrese ID mayor a  0\n");
-        scanf("%d",&id);
-    }
 
     printf("Ingrese marca\n");
     fflush(stdin);
@@ -118,12 +96,9 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, i
         fflush(stdin);
         gets(marca);
     }
-
-
     printf("Indique el ID del tipo de bicicleta\n");
     ListarTipos(tipos,tamT);
     scanf("%d",&idTipo);
-
     while(!validaciones_ValidarTipoValido(tipos,tamT,idTipo))
     {
         printf("Tipo seleccionado Invalido. Reingrese\n");
@@ -134,7 +109,6 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, i
     printf("Indique el ID del color de la bicicleta\n");
     ListarColores(colores,tamC);
     scanf("%d",&idColor);
-
     while(!validaciones_ValidarColorValido(colores,tamC,idColor))
     {
         printf("Color seleccionado Invalido\n");
@@ -146,7 +120,6 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, i
     printf("Ingrese rodado \n");
     ListarRodadosValidos();
     scanf("%f",&rodado);
-
     while(!validaciones_validarRodado(rodado))
     {
         printf("Rodado invalido \n");
@@ -160,6 +133,7 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBici, i
     bici.idTipo = idTipo;
     strcpy(bici.marca,marca);
     bici.rodado = rodado;
+    bici.isEmpty = FALSE;
 
     bicicletas[pos] = bici;
     printf("Alta correcta \n");
@@ -177,7 +151,7 @@ int BAJA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBicis, 
     scanf("%d",&borra);
     if(borra)
     {
-        bicicletas[pos].id = -1;
+        bicicletas[pos].isEmpty = TRUE;
         printf("Bicicleta dada de baja\n");
     }
     return FALSE;
@@ -239,7 +213,6 @@ void ListarBicicletas(eBicicleta bicicletas[],eTipo tipos[], eColor colores[], i
         if(bicicletas[i].id > 0)
         {
           MOSTRARBICI(bicicletas,tipos,colores,bicicletas[i].id,tamBicis,tamT,tamC);
-
         }
     }
 }
@@ -250,7 +223,8 @@ void OrdenarVectorBurbuja(eBicicleta bicicletas[], int tam)
     {
         for(int j = i+1; j <tam; j++)
         {
-            if(bicicletas[i].id > 0 && bicicletas[j].id >0)
+            // Solo busco para las posiciones del vector que tiene valor
+            if(bicicletas[i].isEmpty == FALSE && bicicletas[j].isEmpty == FALSE)
             {
                 if(bicicletas[i].idTipo > bicicletas[j].idTipo || (bicicletas[i].idTipo == bicicletas[j].idTipo && bicicletas[i].rodado > bicicletas[j].rodado) >0)
                 {
@@ -274,7 +248,7 @@ void InicializarBicicleta(eBicicleta bicicletas[], int tam)
 {
     for(int i = 0; i < tam ; i++)
     {
-        bicicletas[i].id = -1;
+        bicicletas[i].isEmpty = TRUE;
     }
 }
 
@@ -294,7 +268,7 @@ int BuscarPosById(eBicicleta bicicletas[], int tam, int id)
 void MOSTRARBICI(eBicicleta bicicletas[],eTipo tipos[], eColor colores[], int id, int tam, int tamT, int tamC)
 {
     int index = BuscarPosById(bicicletas,tam,id);
-    printf("ID  MARCA  TIPO  COLOR  RODADO\n"),
-    printf("%d    %s    %s   %s %f\n",bicicletas[index].id,bicicletas[index].marca,MostrarTipo(tipos,tamT,bicicletas[index].idTipo),MostrarColor(colores,tamC,bicicletas[index].idColor),bicicletas[index].rodado);
-
+    printf("ID  MARCA  TIPO     COLOR    RODADO\n"),
+    printf("%d    %s    %s   %s     %.2f\n",bicicletas[index].id,bicicletas[index].marca,MostrarTipo(tipos,tamT,bicicletas[index].idTipo),MostrarColor(colores,tamC,bicicletas[index].idColor),bicicletas[index].rodado);
+    printf("\n");
 }

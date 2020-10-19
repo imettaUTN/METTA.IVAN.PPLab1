@@ -10,10 +10,11 @@ typedef struct
     int idTipo;
     int idColor;
     float rodado;
+    int isEmpty;
 } eBicicleta;
 
 /** \brief
- * Buscar la posicion libre (-1) en el vector
+ * Buscar la posicion libre en el vector
  * \param  vector bicicletas
  * \param  tamaño vector
  * \return posicion id si encuentra id libre, -1 si lista llena
@@ -37,7 +38,7 @@ int BuscarIdLibre(eBicicleta bicicletas[], int tam);
 void inicializarVectores(eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[],int tamB, int tamT, int tamC, int tamS);
 
 /** \brief
- *  inicializa vector bicicleta (pone id -1)
+ *  inicializa vector bicicleta
  * \param bicicletas[] eBicicleta vector bicicleta
  * \param tam int tamaño vector
  * \return void
@@ -97,7 +98,7 @@ int MODIFICAR(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBi
  *
  */
 
-int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamB, int tamC, int tamT);
+int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamB, int tamC, int tamT, int ID);
 
 
 /** \brief
@@ -152,15 +153,5 @@ void makeSwap(eBicicleta list[], int i, int j);
  *
  */
 void ListarRodadosValidos();
-
-/** \brief
- * Indica si existe el ID
- * \param bicicletas[] eBicicleta vector bicicletas
- * \param tam int tamaño vector
- * \param ID int id de la bicicleta
- * \return int TRUE / FALSE
- *
- */
-int ExisteId(eBicicleta bicicletas[], int tam, int ID);
 
 #endif // BICICLETA_H_INCLUDED

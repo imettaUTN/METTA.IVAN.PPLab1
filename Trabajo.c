@@ -20,10 +20,12 @@ void inicializarTrabajosBici(eTrabajo trabajos[], int tam)
 {
     for(int i = 0; i< tam ; i++)
     {
-        trabajos[i].id = -1;
+        trabajos[i].isEmpaty = TRUE;
     }
+    // datos harcodeados
     for(int i = 0; i< TAMTrabajos ; i++)
     {
+        trabajos[i].isEmpaty = FALSE;
         trabajos[i].fecha = vTrabajos[i].fecha;
         trabajos[i].id = vTrabajos[i].id;
         trabajos[i].idBicicleta = vTrabajos[i].idBicicleta;
@@ -36,31 +38,44 @@ void listarTrabajos(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[], e
     {
         printf("Lista de trabajos vacia \n");
     }
-    for(int i = 0; i< tamTrabajo; i++)
+    if(!ListaTrabajosVacia(trabajos,tamTrabajo))
     {
-        if(trabajos[i].id >=0)
+        for(int i = 0; i< tamTrabajo; i++)
         {
-            mostrarTrabajo(trabajos,bicicletas,tipos,colores,servicios,tamTrabajo,tamBicis,tamTipo,tamColor,tamServ,i);
+            if(!trabajos[i].isEmpaty)
+            {
+                mostrarTrabajo(trabajos,bicicletas,tipos,colores,servicios,tamTrabajo,tamBicis,tamTipo,tamColor,tamServ,i);
+            }
         }
     }
+
+}
+
+int ListaTrabajosVacia(eTrabajo trabajos[], int tam)
+{
+    for(int i = 0; i < tam ; i++)
+    {
+        if(!trabajos[i].isEmpaty)
+        {
+            return FALSE;
+        }
+    }
+    printf("Lista de trabajos vacia \n");
+    return TRUE;
 }
 
 int mostrarTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[], eTipo tipos[], eColor colores[],eServicio servicios[],int tamTrabajo, int tamBicis, int tamTipo, int tamColor, int tamServ, int pos)
 {
-    if(trabajos == NULL || tamTrabajo <0)
-    {
-        printf("Lista trabajo vacia\n");
-        return TRUE;
-    }
+    printf("\n");
     printf("ID Trabajo: %d\n",trabajos[pos].id);
-    printf("Fecha: \n");
+    printf("------------------------\n");
+    printf("\nFecha: \n");
     MostrarFecha(trabajos[pos].fecha);
-    printf("Mascota:\n");
+    printf("\nBicicleta:\n");
     MOSTRARBICI(bicicletas,tipos,colores,bicicletas[pos].id,tamBicis,tamTipo,tamColor);
-    printf("Servicio realizado: \n");
+    printf("\nServicio realizado: \n");
     mostrarServicioById(servicios,tamServ,trabajos[pos].idServicio);
-    printf("\n------------------\n");
-    printf("\n\n");
+    printf("\n");
     return FALSE;
 }
 
@@ -68,12 +83,8 @@ int BuscarIdTrabajoLibre(eTrabajo trabajos[], int tam)
 {
     for(int i = 0; i < tam; i++)
     {
-        if(trabajos[i].id <0)
+        if(trabajos[i].isEmpaty)
         {
-            if(ExisteIdTrabajo(trabajos,tam,i))
-            {
-                continue;
-            }
             return i;
         }
     }
@@ -81,53 +92,35 @@ int BuscarIdTrabajoLibre(eTrabajo trabajos[], int tam)
     return -1;
 }
 
-int BuscarProximoId(eTrabajo trabajos[], int tam)
-{
-    for(int i =0; i< tam ; i++)
-    {
-        if(trabajos[i].id <0)
-        {
-            if(i == 0)
-            {
-                return 0;
-            }
-            return (trabajos[i-1].id + 1);
-        }
-    }
-    return 0;
-}
-
-int AltaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ)
+int AltaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int id)
 {
     eTrabajo trabajo;
     int idBici = 0;
     int idServicio = 0;
-    int valido = TRUE;
-    do
-    {
-        valido = TRUE;
-        printf("Seleccione el id de la bicicleta sobre la que se realizara el trabajo\n");
+
+        printf("Ingrese el id de la bicicleta sobre la que se realizara el trabajo\n");
         ListarBicicletas(bicicletas,tipos,colores,tamBicis,tamTipos,tamColores);
         scanf("%d",&idBici);
-        if(!validaciones_ValidarBicicleta(bicicletas,tamBicis,idBici))
+
+        while(!validaciones_ValidarBicicleta(bicicletas,tamBicis,idBici))
         {
-            printf("Id bicicleta invalido \n");
-            valido = FALSE;
+            printf("Id bicicleta invalido.Rengres el id de la bicicleta sobre la que se realizara el trabajo\n");
+            ListarBicicletas(bicicletas,tipos,colores,tamBicis,tamTipos,tamColores);
+            scanf("%d",&idBici);
         }
-        printf("Seleccione el id de servicio a realizar \n");
+        printf("Ingrese el id de servicio a realizar \n");
         listarServicios(servicios,tamServ);
         scanf("%d",&idServicio);
-        if(!validaciones_ValidarServicio(servicios,tamServ,idServicio))
+        while(!validaciones_ValidarServicio(servicios,tamServ,idServicio))
         {
-             printf("Id servicio invalido \n");
-            valido = FALSE;
+             printf("Id servicio invalido.Reingrese el id de servicio a realizar \n");
+            listarServicios(servicios,tamServ);
+            scanf("%d",&idServicio);
         }
 
-    }
-    while(!valido);
-
-    trabajo.fecha = getFechaActual();
-    trabajo.id =BuscarProximoId(trabajos, tamTrabajos);
+    // encapsulo en la entidad fecha la obtencion de una fecha valida
+    trabajo.fecha = crearFecha();
+    trabajo.id =id;
     trabajo.idBicicleta= idBici;
     trabajo.idServicio = idServicio;
     int index =BuscarIdTrabajoLibre(trabajos,tamTrabajos);
@@ -149,53 +142,4 @@ int buscarPosVecTrabajo(eTrabajo trabajos[], int tam ,int id)
     return -1;
 }
 
-
-int ExisteIdTrabajo(eTrabajo trabajos[], int tam, int ID)
-{
-    for(int i = 0; i <tam; i++)
-    {
-        if(trabajos[i].id == ID)
-        {
-            printf("ID ya existente \n");
-            return TRUE;
-        }
-    }
-    return FALSE;
-}
-
-int BajaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int idTrabajo)
-{
-    int borra;
-    int pos = buscarPosVecTrabajo(trabajos,tamTrabajos,idTrabajo);
-    if(pos <0){return TRUE;}
-    printf("Trabajo a dar de baja :\n");
-    mostrarTrabajo(trabajos,bicicletas,tipos,colores,servicios,tamTrabajos,tamBicis,tamTipos,tamColores,tamServ,pos);
-    printf("Esta seguro que desa darlo de baja? SI 1, NO 0\n");
-    scanf("%d",&borra);
-    if(borra)
-    {
-        trabajos[pos].id = -1;
-        printf("Trabajo dada de baja\n");
-    }
-    return FALSE;
-}
-
-int ModificarTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int idTrabajo)
-{
-    int modifica = 0;
-    int pos = buscarPosVecTrabajo(trabajos,tamTrabajos,idTrabajo);
-    if(pos <0){return TRUE;}
-    printf("Trabajo a dar de modificar :\n");
-    mostrarTrabajo(trabajos,bicicletas,tipos,colores,servicios,tamTrabajos,tamBicis,tamTipos,tamColores,tamServ,pos);
-    printf("Esta seguro que desa modificar el trabajo? SI 1, NO 0\n");
-    scanf("%d",&modifica);
-    if(modifica)
-    {
-        printf("Ingrese la nueva fecha del trabajo \n");
-        trabajos[pos].fecha = crearFecha();
-        printf("Trabajo modificado correctamente \n");
-        return FALSE;
-    }
-    return TRUE;
-}
 

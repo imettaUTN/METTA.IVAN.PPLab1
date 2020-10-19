@@ -28,13 +28,17 @@ int main()
     inicializarVectores(bicicletas,tipos,colores,servicios,TAMBicis,TAMTIPOS,TAMColores,TAMServicio);
     inicializarTrabajosBici(trabajos,TAMTrabajos);
     opcion =common_getMenu("1 ALTA BICICLETA\n2 MODIFICAR BICICLETA:\n3 BAJA BICICLETA\n4 LISTAR BICICLETA\n5 LISTAR TIPOS\n6 LISTAR COLORES\n7 LISTAR SERVICIOS\n8 ALTA TRABAJO\n9 LISTAR TRABAJOS\n10 SALIR","Opcion invalida. Reingrese",1,10,3);
+    int idBicicleta = 4;
+    int idTrabajo = 0;
     do
     {
         int id ;
+        idBicicleta++;
+        idTrabajo++;
         switch(opcion)
         {
         case 1:
-            if(!ALTA(bicicletas,colores,tipos,TAMBicis,TAMColores,TAMTIPOS))
+            if(!ALTA(bicicletas,colores,tipos,TAMBicis,TAMColores,TAMTIPOS,idBicicleta))
             {
                 diAltaPrimero = TRUE;
             }
@@ -50,6 +54,12 @@ int main()
                 printf("Ingrese Id a modificar \n");
                 ListarBicicletas(bicicletas,tipos,colores,TAMBicis,TAMTIPOS,TAMColores);
                 scanf("%d",&id);
+                while(!validaciones_ValidarBicicleta(bicicletas,TAMBicis,id))
+                {
+                    printf("La bicicleta elegida es invalida. Reingrese Id a modificar \n");
+                    ListarBicicletas(bicicletas,tipos,colores,TAMBicis,TAMTIPOS,TAMColores);
+                    scanf("%d",&id);
+                }
                 if(MODIFICAR(bicicletas,colores,tipos,TAMBicis,TAMColores,TAMTIPOS,id))
                 {
                     printf("Modificacion invalida \n");
@@ -66,6 +76,12 @@ int main()
                 printf("Ingrese Id a dar de baja \n");
                 ListarBicicletas(bicicletas,tipos,colores,TAMBicis,TAMTIPOS,TAMColores);
                 scanf("%d",&id);
+                while(!validaciones_ValidarBicicleta(bicicletas,TAMBicis,id))
+                {
+                    printf("La bicicleta elegia no es valida. Reingrese Id a dar de baja \n");
+                    ListarBicicletas(bicicletas,tipos,colores,TAMBicis,TAMTIPOS,TAMColores);
+                    scanf("%d",&id);
+                }
                 if(BAJA(bicicletas,colores,tipos,TAMBicis,TAMColores,TAMTIPOS,id))
                 {
                     printf("BAJA INVALIDA \n");
@@ -119,7 +135,7 @@ int main()
         case 8:
             if(diAltaPrimero)
             {
-                if(AltaTrabajo(trabajos,bicicletas,tipos,colores,servicios,TAMTrabajos,TAMBicis,TAMTIPOS,TAMColores,TAMServicio))
+                if(AltaTrabajo(trabajos,bicicletas,tipos,colores,servicios,TAMTrabajos,TAMBicis,TAMTIPOS,TAMColores,TAMServicio,idTrabajo))
                 {
                     printf("Alta de trabajo invalida \n");
                 }
@@ -155,8 +171,9 @@ int main()
         if(!exit)
         {
             opcion =common_getMenu("1 ALTA BICICLETA\n2 MODIFICAR BICICLETA:\n3 BAJA BICICLETA\n4 LISTAR BICICLETA\n5 LISTAR TIPOS\n6 LISTAR COLORES\n7 LISTAR SERVICIOS\n8 ALTA TRABAJO\n9 LISTAR TRABAJOS\n10 SALIR","Opcion invalida. Reingrese",1,10,3);
+            system("pause");
         }
-        system("pause");
+
     }
     while(!exit && opcion != 10 );
     return 0;

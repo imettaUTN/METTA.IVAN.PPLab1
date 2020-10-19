@@ -12,7 +12,7 @@ typedef struct
     int idBicicleta;
     int idServicio;
     eFecha fecha;
-
+    int isEmpaty ;
 } eTrabajo;
 
 
@@ -44,15 +44,6 @@ int mostrarTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[], eTipo tipos[], e
 int BuscarIdTrabajoLibre(eTrabajo trabajos[], int tam);
 
 /** \brief
- * devuelve el id siguiente al ultimo existente
- * \param trabajos[] eTrabajo vector trabajo
- * \param tam int tamaño vector
- * \return int id
- *
- */
-int BuscarProximoId(eTrabajo trabajos[], int tam);
-
-/** \brief
  *
  * \param trabajos[] eTrabajo vector trabajos
  * \param bicicletas[] eBicicleta vector bicicletas
@@ -67,43 +58,7 @@ int BuscarProximoId(eTrabajo trabajos[], int tam);
  * \return int
  *
  */
-int AltaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ);
-
-/** \brief
- *
- * \param trabajos[] eTrabajo vector trabajos
- * \param bicicletas[] eBicicleta vector bicicletas
- * \param tipos[] eTipo vector tipos
- * \param colores[] eColor vector colores
- * \param servicios[] eServicio vecotr servicios
- * \param tamTrabajo int tamaño vector trabajo
- * \param tamBicis int tamaño vector bicicleta
- * \param tamTipo int tamaño vector tipo
- * \param tamColor int tamaño vector colores
- * \param tamServ int tamaño vector servicios
- * \param idTrabajo int id del trabajo a dar de baja
- * \return int
- *
- */
-int BajaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int idTrabajo);
-
-/** \brief
- * Modifica un trabajo
- * \param trabajos[] eTrabajo vector trabajos
- * \param bicicletas[] eBicicleta vector bicicletas
- * \param tipos[] eTipo vector tipos
- * \param colores[] eColor vector colores
- * \param servicios[] eServicio vecotr servicios
- * \param tamTrabajo int tamaño vector trabajo
- * \param tamBicis int tamaño vector bicicleta
- * \param tamTipo int tamaño vector tipo
- * \param tamColor int tamaño vector colores
- * \param tamServ int tamaño vector servicios
- * \param idTrabajo int id del trabajo a moidifcar
- * \return int
- *
- */
-int ModificarTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int idTrabajo);
+int AltaTrabajo(eTrabajo trabajos[],eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[], int tamTrabajos, int tamBicis,int tamTipos,int tamColores, int tamServ, int id);
 
 /** \brief
  * Lista todos los trabajos
@@ -143,13 +98,11 @@ void inicializarTrabajosBici(eTrabajo trabajos[], int tam);
 int buscarPosVecTrabajo(eTrabajo trabajos[], int tam ,int id);
 
 /** \brief
- * Indica si existe el id
- * \param trabajos[] eTrabajo  vector trabajo
- * \param tam int tamaño
- * \param ID int id
+ * Indica si una lista de trabajos esta vacia o no
+ * \param trabajos[] eTrabajo vector trabajos
+ * \param tam int tamaño vector
  * \return int TRUE / FALSE
  *
  */
-int ExisteIdTrabajo(eTrabajo trabajos[], int tam, int ID);
-
+int ListaTrabajosVacia(eTrabajo trabajos[], int tam);
 #endif // TRABAJO_H_INCLUDED
