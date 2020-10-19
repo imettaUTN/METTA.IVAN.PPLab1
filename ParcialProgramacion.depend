@@ -1,26 +1,26 @@
 # depslib dependency file v1.0
-1602733218 source:c:\programacion1\parcialprogramacion\bicicleta.c
-	"Bicicleta.h"
+1603073258 source:c:\programacion1\parcialprogramacion\bicicleta.c
 	<stdio.h>
 	<string.h>
+	"Bicicleta.h"
 	"DataStore.h"
 	"Tipo.h"
 	"Color.h"
-	"Servicios.h"
-	"Validaciones.h"
 	"Common.h"
+	"Validaciones.h"
 
-1602733508 c:\programacion1\parcialprogramacion\bicicleta.h
+1603071646 c:\programacion1\parcialprogramacion\bicicleta.h
 	"Servicios.h"
 	"Color.h"
 	"Tipo.h"
 
-1602718250 source:c:\programacion1\parcialprogramacion\color.c
+1603073242 source:c:\programacion1\parcialprogramacion\color.c
 	"Color.h"
 	<stdio.h>
 	<string.h>
+	"Validaciones.h"
 
-1602717777 c:\programacion1\parcialprogramacion\color.h
+1603073136 c:\programacion1\parcialprogramacion\color.h
 
 1602719406 source:c:\programacion1\parcialprogramacion\common.c
 	<stdio.h>
@@ -33,25 +33,27 @@
 
 1602719411 c:\programacion1\parcialprogramacion\common.h
 
-1602734015 source:c:\programacion1\parcialprogramacion\main.c
+1603003908 source:c:\programacion1\parcialprogramacion\main.c
 	<stdio.h>
 	<stdlib.h>
+	"Bicicleta.h"
+	"Color.h"
+	"Tipo.h"
+	"Trabajo.h"
+	"Servicios.h"
+	"Validaciones.h"
 	"Common.h"
-	"Bicicleta.h"
-	"Color.h"
-	"Tipo.h"
-	"Trabajo.h"
-	"Servicios.h"
-	"Validaciones.h"
 
-1602729132 source:c:\programacion1\parcialprogramacion\servicios.c
+1603068720 source:c:\programacion1\parcialprogramacion\servicios.c
 	"Servicios.h"
 	<string.h>
 	<stdio.h>
+	"Validaciones.h"
+	"Common.h"
 
-1602731274 c:\programacion1\parcialprogramacion\servicios.h
+1603073381 c:\programacion1\parcialprogramacion\servicios.h
 
-1602733979 source:c:\programacion1\parcialprogramacion\trabajo.c
+1603073271 source:c:\programacion1\parcialprogramacion\trabajo.c
 	<stdio.h>
 	<stdlib.h>
 	"Trabajo.h"
@@ -59,41 +61,53 @@
 	"Color.h"
 	"Tipo.h"
 	"Fecha.h"
+	"Validaciones.h"
 	"Servicios.h"
+	"DataStoreTrabajos.h"
 
-1602734001 c:\programacion1\parcialprogramacion\trabajo.h
+1603072915 c:\programacion1\parcialprogramacion\trabajo.h
 	"Fecha.h"
 	"Color.h"
 	"Tipo.h"
+	"Fecha.h"
 	"Servicios.h"
 	"Bicicleta.h"
 
-1602717971 source:c:\programacion1\parcialprogramacion\tipo.c
+1603068845 source:c:\programacion1\parcialprogramacion\tipo.c
 	"Tipo.h"
 	<stdio.h>
 	<string.h>
+	"Validaciones.h"
 
-1602717986 c:\programacion1\parcialprogramacion\tipo.h
+1603073568 c:\programacion1\parcialprogramacion\tipo.h
 
-1602717155 c:\programacion1\parcialprogramacion\datastore.h
+1603003723 c:\programacion1\parcialprogramacion\datastore.h
 	"Servicios.h"
+	"Trabajo.h"
 
-1602731238 source:c:\programacion1\parcialprogramacion\validaciones.c
+1603069351 source:c:\programacion1\parcialprogramacion\validaciones.c
+	<stdio.h>
+	<ctype.h>
+	<string.h>
+	<stdlib.h>
 	"Validaciones.h"
 	"Color.h"
 	"Tipo.h"
 	"Servicios.h"
 	"Bicicleta.h"
 
-1602729659 c:\programacion1\parcialprogramacion\validaciones.h
+1603069361 c:\programacion1\parcialprogramacion\validaciones.h
 	"Servicios.h"
 	"Bicicleta.h"
 	"Color.h"
 	"Tipo.h"
 
-1602729517 source:c:\programacion1\parcialprogramacion\fecha.c
+1603000902 source:c:\programacion1\parcialprogramacion\fecha.c
 	"Fecha.h"
 	<stdio.h>
+	<time.h>
 
-1602729504 c:\programacion1\parcialprogramacion\fecha.h
+1603000920 c:\programacion1\parcialprogramacion\fecha.h
+
+1603003730 c:\programacion1\parcialprogramacion\datastoretrabajos.h
 

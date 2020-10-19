@@ -1,6 +1,7 @@
 #ifndef DATASTORE_H_INCLUDED
 #define DATASTORE_H_INCLUDED
 #include "Servicios.h"
+#include "Trabajo.h"
 
 char vTipo[4][20] =
 {   "Rutera",

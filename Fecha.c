@@ -1,46 +1,78 @@
 #include "Fecha.h"
 #include <stdio.h>
+#include <time.h>
 #define TRUE 1
 #define FALSE 0
 void MostrarFecha(eFecha fecha)
 {
-    printf("Anio:%d / Mes:%d / Dia:%d",fecha.anio,fecha.mes,fecha.dia);
+    printf("%d/%d/%d \n",fecha.anio,fecha.mes,fecha.dia);
 }
 
-eFecha NewFecha()
+eFecha crearFecha()
+{
+    int valido = TRUE;
+    int dia,mes,anio;
+
+    printf("Ingrese dia \n");
+    scanf("%d",&dia);
+    while(dia < 1 || dia > 31)
+    {
+        printf("Dia invalido, reingrese\n");
+        scanf("%d",&dia);
+
+    }
+    switch(mes)
+    {
+    case 4:
+    case 6:
+    case 9:
+    case 11:
+        if(dia == 31)
+        {
+            while(dia == 31)
+            {
+                printf("El mes no puede tener 31 dias. Reingrese dia\n");
+
+                scanf("%d",&dia);
+
+            }
+        }
+    }
+    printf("Ingrese mes \n");
+    scanf("%d",&mes);
+
+    while(mes < 1 || mes > 12)
+    {
+        printf("Mes invalido, reingrese\n");
+        scanf("%d",&mes);
+
+    }
+
+    printf("Ingrese anio \n");
+    scanf("%d",&anio);
+
+    while(mes < 1 || mes > 12)
+    {
+        printf("Anio invalido. reingrese \n");
+        scanf("%d",&anio);
+
+    }
+    eFecha f;
+    f.dia = dia;
+    f.mes = mes;
+    f.anio = anio;
+    return f;
+
+}
+eFecha getFechaActual()
 {
     eFecha f;
-    int anio,mes,dia;
-    int valid = TRUE;
-
-    do
-    {
-        valid = TRUE;
-        if(!valid)
-        {
-            printf("Dato invalido, reingrese");
-        }
-        printf("Ingrese anio \n");
-        scanf("%d",&f.anio);
-        if(f.anio < 1900)
-        {
-            valid = FALSE;
-        }
-
-        printf("Ingrese mes \n");
-        scanf("%d",&f.mes);
-        if(f.mes < 1 || f.mes > 12)
-        {
-            valid = FALSE;
-        }
-
-        printf("Ingrese dia \n");
-        scanf("%d",&f.dia);
-        if(f.dia < 1 || f.dia > 31)
-        {
-            valid = FALSE;
-        }
-    }while(!valid);
-
+    time_t t;
+    struct tm *tm;
+    t=time(NULL);
+    tm=localtime(&t);
+    f.dia =tm->tm_mday;
+    f.mes = tm->tm_mon;
+    f.anio =1900+tm->tm_year;
     return f;
 }

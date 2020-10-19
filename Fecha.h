@@ -9,5 +9,6 @@ typedef struct
 } eFecha;
 
 void MostrarFecha(eFecha fecha);
-eFecha NewFecha();
+eFecha crearFecha();
+eFecha getFechaActual();
 #endif // FECHA_H_INCLUDED
