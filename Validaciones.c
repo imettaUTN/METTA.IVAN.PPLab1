@@ -7,6 +7,7 @@
 #include "Tipo.h"
 #include "Servicios.h"
 #include "Bicicleta.h"
+#include "Cliente.h"
 #define TRUE 1
 #define FALSE 0
 #define TAMRODADO 4
@@ -40,6 +41,11 @@ int validaciones_ValidarColorValido(eColor colores[], int tam, int id)
 {
     return (BuscarPosColor(colores,tam, id) >=0);
 
+}
+
+int validacion_ValidarCliente(eCliente clientes[], int tam, int idCliente)
+{
+    return (BuscarPosCliente(clientes,tam,idCliente) >=0);
 }
 
 int validaciones_stringValidation(char * str)

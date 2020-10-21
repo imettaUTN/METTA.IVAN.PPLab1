@@ -61,4 +61,14 @@ int validaciones_ValidarServicio(eServicio servicios[], int tam, int idServicio)
  *
  */
 int validaciones_stringValidation(char * str);
+/** \brief
+ * Valida un cliente
+ * \param clientes[] eCliente vector clientes
+ * \param tam int tamaño vector
+ * \param idCliente int id cliente
+ * \return int  TRUE / FALSE
+ *
+ */
+int validacion_ValidarCliente(eCliente clientes[], int tam, int idCliente);
+
 #endif // VALIDACIONES_H_INCLUDED

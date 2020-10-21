@@ -3,15 +3,23 @@
 #include "Servicios.h"
 #include "Color.h"
 #include "Tipo.h"
+#include "Cliente.h"
 
 typedef struct
 {   int id;
     char marca[20];
     int idTipo;
     int idColor;
+    int idCliente;
     float rodado;
     int isEmpty;
 } eBicicleta;
+
+typedef struct
+{
+    int idColor ;
+    int cantidad;
+} eCantColor;
 
 /** \brief
  * Buscar la posicion libre en el vector
@@ -35,7 +43,7 @@ int BuscarIdLibre(eBicicleta bicicletas[], int tam);
  * \return void
  *
  */
-void inicializarVectores(eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[],int tamB, int tamT, int tamC, int tamS);
+void inicializarVectores(eBicicleta bicicletas[],eTipo tipos[],eColor colores[],eServicio servicios[],eCliente clientes[],int tamM, int tamT, int tamC, int tamS, int tamCliente);
 
 /** \brief
  *  inicializa vector bicicleta
@@ -69,7 +77,23 @@ i * \param tam int id de l bicicleta a mostrar
  * \return void
  *
  */
-void MOSTRARBICI(eBicicleta bicicletas[],eTipo tipos[], eColor colores[], int id, int tamB, int tamT, int tamC);
+void MOSTRARBICI(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[], int id, int tam, int tamT, int tamC, int tamClientes);
+
+
+/** \brief
+ *  Muestra la informacion de una bicicleta
+ * \param bicicleta eBicicleta estructura bicicleta
+ * \param tipos[] eTipo vector tipos de bicicleta
+ * \param colores[] eColor vector clores de bicicleta
+i * \param tam int id de l bicicleta a mostrar
+* \param id id de la bicicleta a mostrar
+* \param tamB int  tamaño vector bicicleta
+ * \param tamT int tamaño vector tipos de la bicicleta
+ * \param tamC int tamaño vector colores de la bicicleta
+ * \return void
+ *
+ */
+void MOSTRARUNABICI(eBicicleta bicicleta,eTipo tipos[], eColor colores[],eCliente clientes[], int tamT, int tamC, int tamClientes);
 
 /** \brief
  * Modifica una bicicleta
@@ -83,8 +107,7 @@ void MOSTRARBICI(eBicicleta bicicletas[],eTipo tipos[], eColor colores[], int id
  * \return int TRUE hubo error en la modificacion, False todo ok
  *
  */
-int MODIFICAR(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBicis, int tamC, int tamT,int id);
-
+int MODIFICAR(eBicicleta bicicletas[],eColor colores[], eTipo tipos[],eCliente clientes[], int tamBicis, int tamC, int tamT,int id, int tamClientes);
 
 /** \brief
  * Da de alta una bicicleta
@@ -98,7 +121,7 @@ int MODIFICAR(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBi
  *
  */
 
-int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamB, int tamC, int tamT, int ID);
+int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[],eCliente clientes[], int tamBici, int tamC, int tamT, int id, int tamCliente);
 
 
 /** \brief
@@ -113,7 +136,7 @@ int ALTA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamB, int 
  * \return int TRUE hubo error en la modificacion, False todo ok
  *
  */
-int BAJA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[], int tamBicis, int tamC, int tamT,int id);
+int BAJA(eBicicleta bicicletas[],eColor colores[], eTipo tipos[],eCliente clientes[], int tamBicis, int tamC, int tamT,int id, int tamClientes);
 
 /** \brief
  * Ordena un vector por tipo y rodado
@@ -135,7 +158,7 @@ void OrdenarVectorBurbuja(eBicicleta bicicletas[], int tam);
  * \return void
  *
  */
-void ListarBicicletas(eBicicleta bicicletas[],eTipo tipos[], eColor colores[], int tamBici, int tamTipo, int tamColor);
+void ListarBicicletas(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[], int tamBicis, int tamT, int tamC, int tamClientes);
 
 /** \brief
  * Hace el intercambio de informacion entre dos posiciones del vector
@@ -154,4 +177,98 @@ void makeSwap(eBicicleta list[], int i, int j);
  */
 void ListarRodadosValidos();
 
+/** \brief
+ * Listar biccletas por color
+ * \param bicicletas[] eBicicleta vector bicletas
+ * \param tipos[] eTipo vector tipos
+ * \param colores[] eColor vector colores
+ * \param clientes[] eCliente vector clientes
+ * \param tamBicis int tamaño vec bicleta
+ * \param tamT int tamaño vec tipos
+ * \param tamC int tamaño vec colores
+ * \param tamCliente int tam vec clientes
+ * \return void
+ *
+ */
+void ListarBicletasPorColor(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[],int tamBicis, int tamT, int tamC,int tamClientes);
+
+/** \brief
+ * Listar bicicletas por tipo
+ * Listar biccletas por color
+ * \param bicicletas[] eBicicleta vector bicletas
+ * \param tipos[] eTipo vector tipos
+ * \param colores[] eColor vector colores
+ * \param clientes[] eCliente vector clientes
+ * \param tamBicis int tamaño vec bicleta
+ * \param tamT int tamaño vec tipos
+ * \param tamC int tamaño vec colores
+ * \param tamCliente int tam vec clientes
+ * \return void
+ *
+ */
+void ListarBicletasPorTipo(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[],int tamBicis, int tamT, int tamC,int tamCliente);
+
+/** \brief
+ * Muestras las bicicletas de menor rodado
+ * Listar biccletas por color
+ * \param bicicletas[] eBicicleta vector bicletas
+ * \param tipos[] eTipo vector tipos
+ * \param colores[] eColor vector colores
+ * \param clientes[] eCliente vector clientes
+ * \param tamBicis int tamaño vec bicleta
+ * \param tamT int tamaño vec tipos
+ * \param tamC int tamaño vec colores
+ * \param tamCliente int tam vec clientes
+ * \return void
+ *
+ */
+void MostrarBicletaMenorRodado(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[],int tamBicis, int tamT, int tamC, int tamClientes);
+
+/** \brief
+ *  Lista bicicletas agrupadas por tipo
+ * \param bicicletas[] eBicicleta vector bicletas
+ * \param tipos[] eTipo vector tipos
+ * \param colores[] eColor vector colores
+ * \param clientes[] eCliente vector clientes
+ * \param tamBicis int tamaño vec bicleta
+ * \param tamT int tamaño vec tipos
+ * \param tamC int tamaño vec colores
+ * \param tamCliente int tam vec clientes
+ * \return void
+ *
+ */
+void ListarBicicletasPorTipo(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],eCliente clientes[],int tamBicis, int tamT, int tamC, int tamClientes);
+
+/** \brief
+ *  Muestra la cantidad de bicicletas hay por tipo y color
+ * \param bicicletas[] eBicicleta vector bicletas
+ * \param tipos[] eTipo vector tipos
+ * \param colores[] eColor vector colores
+ * \param tamBicis int tamaño vec bicleta
+ * \param tamT int tamaño vec tipos
+ * \param tamC int tamaño vec colores
+ * \return void
+ *
+ */
+void ContarBicletasPorTipoyColor(eBicicleta bicicletas[],eTipo tipos[], eColor colores[],int tamBicis, int tamT, int tamC);
+
+/** \brief
+ * Ordenar vector por cantidad de colores
+ * \param cantColores[] eCantColor vector aux
+ * \param tam int  tamaño vector
+ * \return void
+ *
+ */
+void OrdenarVectorCantColores(eCantColor cantColores[], int tam);
+
+/** \brief
+ * Muestra el o los colores mas elegidos por cliente
+ * \param bicicletas[] eBicicleta vector bicicletas
+ * \param tamBicis int  tamaño vec bicicleta
+ * \param colores[] eColor vector colores
+ * \param tamC int tamaño vec colores
+ * \return void
+ *
+ */
+void MostrarColoresMasElegidos(eBicicleta bicicletas[],int tamBicis,eColor colores[],int tamC);
 #endif // BICICLETA_H_INCLUDED

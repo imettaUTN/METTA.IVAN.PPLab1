@@ -8,6 +8,10 @@ void MostrarFecha(eFecha fecha)
     printf("%d/%d/%d \n",fecha.anio,fecha.mes,fecha.dia);
 }
 
+int comprarFechas(eFecha origen, eFecha destino)
+{
+    return (origen.anio == destino.anio && origen.mes == destino.mes && origen.dia == destino.dia);
+}
 eFecha crearFecha()
 {
     int dia,mes,anio;
